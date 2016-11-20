@@ -10,7 +10,7 @@ import org.sonar.api.measures.Metrics;
 /**
  * Rules Compliance Index (RCI) metrics.
  */
-public class RciMetrics implements Metrics {
+public final class RciMetrics implements Metrics {
 
 	/**
 	 * The Rules Compliance Index (RCI) metric.

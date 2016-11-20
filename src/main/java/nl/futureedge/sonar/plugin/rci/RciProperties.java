@@ -8,7 +8,7 @@ import org.sonar.api.config.PropertyDefinition;
 /**
  * Rules Compliance Index (RCI) properties.
  */
-public class RciProperties {
+public final class RciProperties {
 
 	/**
 	 * Categorie.
@@ -37,7 +37,7 @@ public class RciProperties {
 	public static final String INFO_KEY = "sonar.rci.weigth.info";
 
 	private RciProperties() {
-		// only statics
+		// Not instantiable
 	}
 
 	/**
