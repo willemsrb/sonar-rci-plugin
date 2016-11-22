@@ -18,7 +18,7 @@ public class RciPluginTest {
 
 		Assert.assertEquals(0, context.getExtensions().size());
 		javaPlugin.define(context);
-		Assert.assertEquals(7, context.getExtensions().size());
+		Assert.assertEquals(4, context.getExtensions().size());
 	}
 
 }

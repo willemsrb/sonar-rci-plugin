@@ -3,7 +3,9 @@ package nl.futureedge.sonar.plugin.rci;
 import java.util.Arrays;
 import java.util.List;
 
+import org.sonar.api.ce.measure.Settings;
 import org.sonar.api.config.PropertyDefinition;
+import org.sonar.api.resources.Qualifiers;
 
 /**
  * Rules Compliance Index (RCI) properties.
@@ -13,28 +15,16 @@ public final class RciProperties {
 	/**
 	 * Categorie.
 	 */
-	public static final String CATEGORY = "Rules Compliance Index (RCI)";
+	public static final String CATEGORY = "RCI";
 
 	/**
-	 * Weight of blocker issues.
+	 * Weights issues.
 	 */
-	public static final String BLOCKER_KEY = "sonar.rci.weigth.blocker";
+	public static final String WEIGTHS_KEY = "sonar.rci.weigths";
 	/**
-	 * Weight of critical issues.
+	 * Rating.
 	 */
-	public static final String CRITICAL_KEY = "sonar.rci.weigth.critical";
-	/**
-	 * Weight of major issues.
-	 */
-	public static final String MAJOR_KEY = "sonar.rci.weigth.major";
-	/**
-	 * Weight of minor issues.
-	 */
-	public static final String MINOR_KEY = "sonar.rci.weight.minor";
-	/**
-	 * Weight of info issues.
-	 */
-	public static final String INFO_KEY = "sonar.rci.weigth.info";
+	public static final String RATINGS_KEY = "sonar.rci.ratings";
 
 	private RciProperties() {
 		// Not instantiable
@@ -46,16 +36,54 @@ public final class RciProperties {
 	 * @return property definitions
 	 */
 	public static List<PropertyDefinition> definitions() {
-		return Arrays.asList(
-				PropertyDefinition.builder(BLOCKER_KEY).name("Weight of blocker issues").defaultValue("10")
-						.category(CATEGORY).build(),
-				PropertyDefinition.builder(CRITICAL_KEY).name("Weight of critical issues").defaultValue("5")
-						.category(CATEGORY).build(),
-				PropertyDefinition.builder(MAJOR_KEY).name("Weight of major issues").defaultValue("3")
-						.category(CATEGORY).build(),
-				PropertyDefinition.builder(MINOR_KEY).name("Weight of minor issues").defaultValue("1")
-						.category(CATEGORY).build(),
-				PropertyDefinition.builder(INFO_KEY).name("Weight of info issues").defaultValue("0").category(CATEGORY)
+		return Arrays.asList(PropertyDefinition.builder(WEIGTHS_KEY).name("Issue weigths")
+				.description("Relative weiths of issues based on severity (blocker,critical,major,minor,info)")
+				.category(CATEGORY).defaultValue("10,5,3,1,0").index(100).onQualifiers(Qualifiers.PROJECT).build(),
+				PropertyDefinition.builder(RATINGS_KEY).name("Rating")
+						.description(
+								"Rating (ranging from A (very good) to E (very bad)). This setting define the values for A through D with E being below the last value.")
+						.category(CATEGORY).defaultValue("97,92,85,75").index(200).onQualifiers(Qualifiers.PROJECT)
 						.build());
 	}
+
+	/**
+	 * Get the weights from the configuration.
+	 *
+	 * @param settings
+	 *            settings
+	 * @return weights
+	 */
+	public static RciWeights getWeights(final Settings settings) {
+		final String weightsSetting = settings.getString(WEIGTHS_KEY);
+
+		final String[] weights = weightsSetting == null ? new String[] {} : weightsSetting.split(",");
+
+		return new RciWeights(getIntFromArray(weights, 0), getIntFromArray(weights, 1), getIntFromArray(weights, 2),
+				getIntFromArray(weights, 3), getIntFromArray(weights, 4));
+	}
+
+	/**
+	 * Get the ratings from the configuration.
+	 *
+	 * @param settings
+	 *            settings
+	 * @return ratings
+	 */
+	public static RciRating getRating(final Settings settings) {
+		final String ratingsSetting = settings.getString(RATINGS_KEY);
+
+		final String[] ratings = ratingsSetting == null ? new String[] {} : ratingsSetting.split(",");
+
+		return new RciRating(getIntFromArray(ratings, 0), getIntFromArray(ratings, 1), getIntFromArray(ratings, 2),
+				getIntFromArray(ratings, 3));
+	}
+
+	private static int getIntFromArray(final String[] strings, final int index) {
+		if (index >= strings.length || "".equals(strings[index])) {
+			return 0;
+		} else {
+			return Integer.parseInt(strings[index]);
+		}
+	}
+
 }

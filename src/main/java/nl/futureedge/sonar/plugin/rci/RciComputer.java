@@ -22,16 +22,13 @@ public final class RciComputer implements MeasureComputer {
 		return context.newDefinitionBuilder()
 				.setInputMetrics(METRIC_ISSUES_BLOCKER, METRIC_ISSUES_CRITICAL, METRIC_ISSUES_MAJOR,
 						METRIC_ISSUES_MINOR, METRIC_ISSUES_INFO, METRIC_LINES_OF_CODE)
-				.setOutputMetrics(RciMetrics.RULES_COMPLIANCE_INDEX.key()).build();
+				.setOutputMetrics(RciMetrics.RULES_COMPLIANCE_INDEX.key(), RciMetrics.RULES_COMPLIANCE_RATING.key())
+				.build();
 	}
 
 	@Override
 	public void compute(final MeasureComputerContext context) {
-		final int blockerWeight = getSettingValue(context, RciProperties.BLOCKER_KEY);
-		final int criticalWeight = getSettingValue(context, RciProperties.CRITICAL_KEY);
-		final int majorWeight = getSettingValue(context, RciProperties.MAJOR_KEY);
-		final int minorWeight = getSettingValue(context, RciProperties.MINOR_KEY);
-		final int infoWeight = getSettingValue(context, RciProperties.INFO_KEY);
+		final RciWeights weights = RciProperties.getWeights(context.getSettings());
 
 		final int blockerIssues = getMeasureValue(context, METRIC_ISSUES_BLOCKER);
 		final int criticalIssues = getMeasureValue(context, METRIC_ISSUES_CRITICAL);
@@ -39,8 +36,8 @@ public final class RciComputer implements MeasureComputer {
 		final int minorIssues = getMeasureValue(context, METRIC_ISSUES_MINOR);
 		final int infoIssues = getMeasureValue(context, METRIC_ISSUES_INFO);
 
-		final int issuesWeight = blockerWeight * blockerIssues + criticalWeight * criticalIssues
-				+ majorWeight * majorIssues + minorWeight * minorIssues + infoWeight * infoIssues;
+		final int issuesWeight = weights.getBlocker() * blockerIssues + weights.getCritical() * criticalIssues
+				+ weights.getMajor() * majorIssues + weights.getMinor() * minorIssues + weights.getInfo() * infoIssues;
 
 		final int linesOfCode = getMeasureValue(context, METRIC_LINES_OF_CODE);
 
@@ -48,16 +45,9 @@ public final class RciComputer implements MeasureComputer {
 		if (linesOfCode != 0) {
 			rulesComplianceIndex = (1.0 - (double) issuesWeight / (double) linesOfCode) * 100;
 			context.addMeasure(RciMetrics.RULES_COMPLIANCE_INDEX.key(), Math.max(rulesComplianceIndex, 0.0));
-		}
-	}
 
-	private int getSettingValue(final MeasureComputerContext context, final String key) {
-		final String setting = context.getSettings().getString(key);
-
-		if (setting == null || "".equals(setting)) {
-			return 0;
-		} else {
-			return Integer.parseInt(setting);
+			final RciRating rating = RciProperties.getRating(context.getSettings());
+			context.addMeasure(RciMetrics.RULES_COMPLIANCE_RATING.key(), rating.getRating(rulesComplianceIndex));
 		}
 	}
 
