@@ -1,5 +1,7 @@
 sudo: false
 
+install: true
+
 cache:
   directories:
     - '$HOME/.m2/repository'
@@ -10,7 +12,11 @@ language: java
 jdk:
   - oraclejdk8
 
+addons:
+  sonarqube: true
+
 script:
+  - export SONARQUBE_SKIPPED=
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.login=$SONAR_TOKEN
 
 deploy:
