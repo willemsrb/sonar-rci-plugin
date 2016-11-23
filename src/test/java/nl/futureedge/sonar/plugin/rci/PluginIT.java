@@ -72,6 +72,7 @@ public class PluginIT {
 				RciMetrics.RULES_COMPLIANCE_INDEX.getKey());
 
 		final Resource resource = orchestrator.getServer().getWsClient().find(query);
+		Assert.assertNotNull("Metric not found", resource);
 		final Measure measure = resource.getMeasure(RciMetrics.RULES_COMPLIANCE_INDEX.getKey());
 		final Double value = measure.getValue();
 
