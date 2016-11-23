@@ -3,6 +3,7 @@ package nl.futureedge.sonar.plugin.rci;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,8 +59,13 @@ public class PluginIT {
 		final MavenBuild install = MavenBuild.create(pom).setGoals("clean verify");
 		Assert.assertTrue("'clean verify' failed", orchestrator.executeBuild(install).isSuccess());
 
-		final MavenBuild sonar = MavenBuild.create(pom).setGoals("sonar:sonar").setProperty("sonar.login", "")
-				.setProperty("sonar.password", "").setProperty("sonar.skip", "false");
+		final HashMap<String, String> sonarProperties = new HashMap<>();
+		sonarProperties.put("sonar.login", "");
+		sonarProperties.put("sonar.password", "");
+		sonarProperties.put("sonar.skip", "false");
+		sonarProperties.put("sonar.scanner.skip", "false");
+
+		final MavenBuild sonar = MavenBuild.create(pom).setGoals("sonar:sonar").setProperties(sonarProperties);
 		Assert.assertTrue("'sonar:sonar' failed", orchestrator.executeBuild(sonar).isSuccess());
 	}
 
