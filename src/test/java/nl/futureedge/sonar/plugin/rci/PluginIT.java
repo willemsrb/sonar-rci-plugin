@@ -58,7 +58,8 @@ public class PluginIT {
 		final MavenBuild install = MavenBuild.create(pom).setGoals("clean verify");
 		Assert.assertTrue("'clean verify' failed", orchestrator.executeBuild(install).isSuccess());
 
-		final MavenBuild sonar = MavenBuild.create(pom).setGoals("sonar:sonar");
+		final MavenBuild sonar = MavenBuild.create(pom).setGoals("sonar:sonar").setProperty("sonar.login", "")
+				.setProperty("sonar.password", "");
 		Assert.assertTrue("'sonar:sonar' failed", orchestrator.executeBuild(sonar).isSuccess());
 	}
 
