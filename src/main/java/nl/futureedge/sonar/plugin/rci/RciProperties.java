@@ -20,7 +20,7 @@ public final class RciProperties {
 	/**
 	 * Weights issues.
 	 */
-	public static final String WEIGTHS_KEY = "sonar.rci.weigths";
+	public static final String WEIGTHS_KEY = "sonar.rci.weights";
 	/**
 	 * Rating.
 	 */
@@ -36,7 +36,7 @@ public final class RciProperties {
 	 * @return property definitions
 	 */
 	public static List<PropertyDefinition> definitions() {
-		return Arrays.asList(PropertyDefinition.builder(WEIGTHS_KEY).name("Issue weigths")
+		return Arrays.asList(PropertyDefinition.builder(WEIGTHS_KEY).name("Issue weights")
 				.description("Relative weiths of issues based on severity (blocker,critical,major,minor,info)")
 				.category(CATEGORY).defaultValue("10,5,3,1,0").index(100).onQualifiers(Qualifiers.PROJECT).build(),
 				PropertyDefinition.builder(RATINGS_KEY).name("Rating")

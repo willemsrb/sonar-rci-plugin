@@ -7,8 +7,8 @@
   <packaging>sonar-plugin</packaging>
   <version>1.1-SNAPSHOT</version>
 
-  <name>Rules Compliance Index (RCI) Plugin for SonarQube</name>
-  <description>Rules Compliance Index (RCI) Plugin for SonarQube</description>
+  <name>Rules Compliance Index (RCI)</name>
+  <description>Calculates the Rules Compliance Index (RCI) for SonarQube projects. The RCI measures the (weighted) number of issues against the lines of code.</description>
   <url>https://github.com/willemsrb/sonar-rci-plugin</url>
   <inceptionYear>2016</inceptionYear>
 
