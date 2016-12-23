@@ -5,7 +5,7 @@
   <groupId>nl.future-edge.sonarqube.plugins</groupId>
   <artifactId>sonar-rci-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>1.0.1</version>
+  <version>1.1-SNAPSHOT</version>
 
   <name>Rules Compliance Index (RCI)</name>
   <description>Calculates the Rules Compliance Index (RCI) for SonarQube projects. The RCI measures the (weighted) number of issues against the lines of code.</description>
@@ -32,7 +32,7 @@
   <scm>
     <url>https://github.com/willemsrb/sonar-rci-plugin</url>
     <connection>scm:git:https://github.com/willemsrb/sonar-rci-plugin.git</connection>
-    <tag>sonar-rci-plugin-1.0.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <developers>
