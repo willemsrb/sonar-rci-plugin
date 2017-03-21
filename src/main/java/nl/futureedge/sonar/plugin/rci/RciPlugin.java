@@ -7,9 +7,9 @@ import org.sonar.api.Plugin;
  */
 public final class RciPlugin implements Plugin {
 
-	@Override
-	public void define(final Context context) {
-		context.addExtensions(RciProperties.definitions());
-		context.addExtensions(RciMetrics.class, RciComputer.class);
-	}
+    @Override
+    public void define(final Context context) {
+        context.addExtensions(RciProperties.definitions());
+        context.addExtensions(RciMetrics.class, RciComputer.class);
+    }
 }

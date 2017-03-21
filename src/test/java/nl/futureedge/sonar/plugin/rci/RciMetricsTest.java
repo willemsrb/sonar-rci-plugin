@@ -8,14 +8,14 @@ import org.sonar.api.measures.Metric;
 
 public class RciMetricsTest {
 
-	@Test
-	public void test() {
-		final RciMetrics subject = new RciMetrics();
-		final List<Metric> metrics = subject.getMetrics();
+    @Test
+    public void test() {
+        final RciMetrics subject = new RciMetrics();
+        final List<Metric> metrics = subject.getMetrics();
 
-		Assert.assertEquals(2, metrics.size());
-		// Assert.assertEquals("rules_compliance_index",
-		// metrics.iterator().next().getKey());
-	}
+        Assert.assertEquals(2, metrics.size());
+        // Assert.assertEquals("rules_compliance_index",
+        // metrics.iterator().next().getKey());
+    }
 
 }
