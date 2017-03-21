@@ -1,5 +1,5 @@
 # Rules Compliance Index (RCI) Plugin for SonarQube [![Build Status](https://travis-ci.org/willemsrb/sonar-rci-plugin.svg?branch=master)](https://travis-ci.org/willemsrb/sonar-rci-plugin) [![Quality Gate](https://sonarqube.com/api/badges/gate?key=nl.future-edge.sonarqube.plugins:sonar-rci-plugin)](https://sonarqube.com/dashboard/index?id=nl.future-edge.sonarqube.plugins%3Asonar-rci-plugin)
-*Requires SonarQube 5.6+ (tested against 5.6, 5.6.3 (LTS), 6.0, 6.1 and 6.2)*
+*Requires SonarQube 5.6+ (tested against 5.6, 5.6.3 (LTS), 6.0, 6.1, 6.2, 6.3)*
 
 This plugin calculates a metric based on the weighted value of issues and the number of lines of code (default settings are given in parentheses and can be configured on a global and per project level; other values are taken from the core metrics):
 
