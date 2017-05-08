@@ -12,3 +12,8 @@ This plugin calculates a metric based on the weighted value of issues and the nu
 Rules Compliance Index = max(1.0 - (Issue Weigth / Lines of Code) * 100, 0)</pre>
 
 The plugin also adds a (configurable) Rules Compliance Rating metric to visualize the RCI (score an A-rating with a rules compliance index of 97%).
+
+
+#### Installation
+
+Install the plugin via the Update Center in the SonarQube administration pages. Or to install the plugin manually; copy the .jar file from the release to the `extensions/plugins` directory of your SonarQube installation.
